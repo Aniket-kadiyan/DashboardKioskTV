@@ -19,6 +19,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/Theme.DashboardKioskTV">
 
         <activity
@@ -30,10 +31,22 @@
             android:name=".PlaylistActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
+
         <activity
-            android:name=".SettingsActivity"
+            android:name=".AdminMenuActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
+
+        <activity
+            android:name=".SettingsMenuActivity"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+
+        <activity
+            android:name=".ChangePinActivity"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+
         <activity
             android:name=".PinSetupActivity"
             android:exported="false"
@@ -52,5 +65,4 @@
         </activity>
 
     </application>
-
 </manifest>

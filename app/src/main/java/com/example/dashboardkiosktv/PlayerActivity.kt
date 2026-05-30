@@ -47,6 +47,7 @@ class PlayerActivity : AppCompatActivity() {
             hint = "Admin PIN"
             textSize = 20f
             setPadding(32, 24, 32, 24)
+            imeOptions = android.view.inputmethod.EditorInfo.IME_ACTION_DONE
         }
 
         val container = LinearLayout(this).apply {
@@ -54,45 +55,63 @@ class PlayerActivity : AppCompatActivity() {
             setPadding(48, 24, 48, 0)
 
             addView(TextView(this@PlayerActivity).apply {
-                text = "Enter admin PIN to open playlist settings"
+                text = "Enter admin PIN"
                 textSize = 18f
             })
 
             addView(input)
         }
 
-        AlertDialog.Builder(this)
+        val dialog = AlertDialog.Builder(this)
             .setTitle("Admin Access")
             .setView(container)
-            .setNegativeButton("Cancel") { dialog, _ ->
-                dialog.dismiss()
+            .setNegativeButton("Cancel") { d, _ ->
+                d.dismiss()
             }
-            .setPositiveButton("Unlock", null)
             .create()
-            .apply {
-                setOnShowListener {
-                    getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-                        val enteredPin = input.text.toString().trim()
-                        val securityStorage = SecurityStorage(this@PlayerActivity)
 
-                        if (securityStorage.verifyAdminPin(enteredPin)) {
-                            dismiss()
-                            openPlaylistEditor()
-                        } else {
-                            input.setText("")
-                            Toast.makeText(
-                                this@PlayerActivity,
-                                "Incorrect PIN",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    }
-                }
+        fun tryUnlock() {
+            val enteredPin = input.text.toString().trim()
+            val securityStorage = SecurityStorage(this@PlayerActivity)
 
-                show()
+            if (securityStorage.verifyAdminPin(enteredPin)) {
+                dialog.dismiss()
+                openAdminMenu()
+            } else {
+                input.setText("")
+                Toast.makeText(
+                    this@PlayerActivity,
+                    "Incorrect PIN",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-    }
+        }
 
+        input.setOnEditorActionListener { _, actionId, event ->
+            val isDoneAction =
+                actionId == android.view.inputmethod.EditorInfo.IME_ACTION_DONE
+
+            val isEnterKey =
+                event?.keyCode == KeyEvent.KEYCODE_ENTER &&
+                        event.action == KeyEvent.ACTION_UP
+
+            if (isDoneAction || isEnterKey) {
+                tryUnlock()
+                true
+            } else {
+                false
+            }
+        }
+
+        dialog.setOnShowListener {
+            input.requestFocus()
+            dialog.window?.setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE
+            )
+        }
+
+        dialog.show()
+    }
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -166,14 +185,14 @@ class PlayerActivity : AppCompatActivity() {
         val playlistText = storage.getPlaylistText()
 
         if (playlistText.isNullOrBlank()) {
-            openPlaylistEditor()
+            openAdminMenu()
             return
         }
 
         val parsedPages = PlaylistParser.parse(playlistText)
 
         if (parsedPages.isEmpty()) {
-            openPlaylistEditor()
+            openAdminMenu()
             return
         }
 
@@ -187,7 +206,7 @@ class PlayerActivity : AppCompatActivity() {
 
     private fun loadCurrentDashboard() {
         if (dashboardPages.isEmpty()) {
-            openPlaylistEditor()
+            openAdminMenu()
             return
         }
 
@@ -212,7 +231,7 @@ class PlayerActivity : AppCompatActivity() {
 
     private fun showNextDashboard() {
         if (dashboardPages.isEmpty()) {
-            openPlaylistEditor()
+            openAdminMenu()
             return
         }
 
@@ -232,11 +251,11 @@ class PlayerActivity : AppCompatActivity() {
         loadCurrentDashboard()
     }
 
-    private fun openPlaylistEditor() {
+    private fun openAdminMenu() {
         isPlayerActive = false
         handler.removeCallbacks(rotateRunnable)
 
-        startActivity(Intent(this, PlaylistActivity::class.java))
+        startActivity(Intent(this, AdminMenuActivity::class.java))
         finish()
     }
 

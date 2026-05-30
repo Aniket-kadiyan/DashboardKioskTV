@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             else -> {
-                PlaylistActivity::class.java
+                AdminMenuActivity::class.java
             }
         }
 

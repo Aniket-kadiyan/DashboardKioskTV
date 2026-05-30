@@ -40,7 +40,7 @@ class PlaylistActivity : AppCompatActivity() {
         }
 
         settingsButton.setOnClickListener {
-            startActivity(Intent(this, SettingsActivity::class.java))
+            startActivity(Intent(this, ChangePinActivity::class.java))
         }
     }
 

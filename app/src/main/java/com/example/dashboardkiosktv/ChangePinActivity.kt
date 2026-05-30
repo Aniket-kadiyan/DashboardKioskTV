@@ -7,7 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dashboardkiosktv.data.SecurityStorage
 
-class SettingsActivity : AppCompatActivity() {
+class ChangePinActivity : AppCompatActivity() {
 
     private lateinit var currentPinInput: EditText
     private lateinit var newPinInput: EditText

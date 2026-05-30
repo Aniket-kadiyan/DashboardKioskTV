@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/settingsMenuRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="48dp"
+    android:background="#101010">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Settings"
+        android:textColor="#FFFFFF"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:paddingBottom="36dp" />
+
+    <Button
+        android:id="@+id/changePinButton"
+        android:layout_width="420dp"
+        android:layout_height="wrap_content"
+        android:text="Change Admin PIN"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="420dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="Back"
+        android:textSize="20sp" />
+
+</LinearLayout>
