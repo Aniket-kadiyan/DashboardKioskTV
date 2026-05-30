@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/settingsRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="48dp"
+    android:background="#101010">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Settings"
+        android:textColor="#FFFFFF"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:paddingBottom="12dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Change Admin PIN"
+        android:textColor="#CCCCCC"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:paddingBottom="32dp" />
+
+    <EditText
+        android:id="@+id/currentPinInput"
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:hint="Current PIN"
+        android:inputType="numberPassword"
+        android:maxLength="8"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#777777"
+        android:background="#202020"
+        android:padding="16dp"
+        android:textSize="22sp"
+        android:gravity="center" />
+
+    <EditText
+        android:id="@+id/newPinInput"
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="New PIN"
+        android:inputType="numberPassword"
+        android:maxLength="8"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#777777"
+        android:background="#202020"
+        android:padding="16dp"
+        android:textSize="22sp"
+        android:gravity="center" />
+
+    <EditText
+        android:id="@+id/confirmNewPinInput"
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Confirm New PIN"
+        android:inputType="numberPassword"
+        android:maxLength="8"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#777777"
+        android:background="#202020"
+        android:padding="16dp"
+        android:textSize="22sp"
+        android:gravity="center" />
+
+    <Button
+        android:id="@+id/changePinButton"
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Change PIN"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Back"
+        android:textSize="18sp" />
+
+</LinearLayout>

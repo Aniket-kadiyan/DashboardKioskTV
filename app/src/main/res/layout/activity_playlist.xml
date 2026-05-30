@@ -63,5 +63,12 @@
         android:layout_height="wrap_content"
         android:text="Save and Start Display"
         android:textSize="18sp" />
+    <Button
+        android:id="@+id/settingsButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Settings"
+        android:textSize="18sp" />
 
 </LinearLayout>

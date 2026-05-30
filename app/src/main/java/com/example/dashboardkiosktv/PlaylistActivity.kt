@@ -16,6 +16,8 @@ class PlaylistActivity : AppCompatActivity() {
     private lateinit var loopCheckbox: CheckBox
     private lateinit var startButton: Button
 
+    private lateinit var settingsButton: Button
+
     private lateinit var storage: PlaylistStorage
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,12 +30,17 @@ class PlaylistActivity : AppCompatActivity() {
         playlistInput = findViewById(R.id.playlistInput)
         loopCheckbox = findViewById(R.id.loopCheckbox)
         startButton = findViewById(R.id.startButton)
+        settingsButton = findViewById(R.id.settingsButton)
 
         playlistInput.setText(storage.getPlaylistTextOrDefault())
         loopCheckbox.isChecked = storage.isLoopEnabled()
 
         startButton.setOnClickListener {
             saveAndStart()
+        }
+
+        settingsButton.setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
         }
     }
 
