@@ -10,41 +10,77 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Dashboard Kiosk Playlist"
+        android:text="Manage Playlist"
         android:textColor="#FFFFFF"
-        android:textSize="28sp"
+        android:textSize="30sp"
         android:textStyle="bold"
-        android:paddingBottom="16dp" />
+        android:paddingBottom="8dp" />
 
     <TextView
+        android:id="@+id/helpText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Enter one dashboard per line:"
-        android:textColor="#CCCCCC"
-        android:textSize="16sp" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Title | URL | Seconds"
-        android:textColor="#999999"
-        android:textSize="14sp"
+        android:text="Select an item to edit, delete, or reorder."
+        android:textColor="#BBBBBB"
+        android:textSize="16sp"
         android:paddingBottom="16dp" />
 
-    <EditText
-        android:id="@+id/playlistInput"
+    <ListView
+        android:id="@+id/playlistListView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:gravity="top|start"
-        android:inputType="textMultiLine|textUri"
-        android:singleLine="false"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#777777"
+        android:choiceMode="singleChoice"
         android:background="#202020"
-        android:padding="16dp"
-        android:textSize="16sp"
-        android:hint="Production | https://example.com | 30&#10;Quality | https://www.wikipedia.org | 20" />
+        android:divider="#444444"
+        android:dividerHeight="1dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="16dp">
+
+        <Button
+            android:id="@+id/addButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Add" />
+
+        <Button
+            android:id="@+id/editButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:text="Edit" />
+
+        <Button
+            android:id="@+id/deleteButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:text="Delete" />
+
+        <Button
+            android:id="@+id/moveUpButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:text="Up" />
+
+        <Button
+            android:id="@+id/moveDownButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:text="Down" />
+
+    </LinearLayout>
 
     <CheckBox
         android:id="@+id/loopCheckbox"
@@ -58,17 +94,26 @@
         android:paddingBottom="16dp" />
 
     <Button
+        android:id="@+id/saveButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save Playlist"
+        android:textSize="18sp" />
+
+    <Button
         android:id="@+id/startButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
         android:text="Save and Start Display"
         android:textSize="18sp" />
+
     <Button
-        android:id="@+id/settingsButton"
+        android:id="@+id/backButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Settings"
+        android:layout_marginTop="12dp"
+        android:text="Back"
         android:textSize="18sp" />
 
 </LinearLayout>

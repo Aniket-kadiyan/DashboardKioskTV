@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dashboardPageEditorRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="48dp"
+    android:background="#101010">
+
+    <TextView
+        android:id="@+id/editorTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Dashboard Page"
+        android:textColor="#FFFFFF"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:paddingBottom="32dp" />
+
+    <EditText
+        android:id="@+id/titleInput"
+        android:layout_width="620dp"
+        android:layout_height="wrap_content"
+        android:hint="Display Name"
+        android:singleLine="true"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#777777"
+        android:background="#202020"
+        android:padding="16dp"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/urlInput"
+        android:layout_width="620dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Dashboard URL"
+        android:singleLine="true"
+        android:inputType="textUri"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#777777"
+        android:background="#202020"
+        android:padding="16dp"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/durationInput"
+        android:layout_width="620dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Duration in seconds"
+        android:singleLine="true"
+        android:inputType="number"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#777777"
+        android:background="#202020"
+        android:padding="16dp"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/saveItemButton"
+        android:layout_width="620dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Save Item"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/cancelButton"
+        android:layout_width="620dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Cancel"
+        android:textSize="18sp" />
+
+</LinearLayout>

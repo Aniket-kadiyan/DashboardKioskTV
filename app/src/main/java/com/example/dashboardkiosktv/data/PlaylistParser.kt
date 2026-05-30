@@ -33,4 +33,10 @@ object PlaylistParser {
                 )
             }
     }
+
+    fun toStorageText(pages: List<DashboardPage>): String {
+        return pages.joinToString(separator = "\n") { page ->
+            "${page.title} | ${page.url} | ${page.displaySeconds}"
+        }
+    }
 }
