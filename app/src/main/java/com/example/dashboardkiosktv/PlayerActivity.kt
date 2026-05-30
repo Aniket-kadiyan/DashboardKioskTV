@@ -16,6 +16,13 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.dashboardkiosktv.data.DashboardPage
 import com.example.dashboardkiosktv.data.PlaylistParser
 import com.example.dashboardkiosktv.data.PlaylistStorage
+import android.app.AlertDialog
+import android.text.InputType
+import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
+import com.example.dashboardkiosktv.data.SecurityStorage
 
 class PlayerActivity : AppCompatActivity() {
 
@@ -33,6 +40,59 @@ class PlayerActivity : AppCompatActivity() {
             showNextDashboard()
         }
     }
+
+    private fun showAdminUnlockDialog() {
+        val input = EditText(this).apply {
+            inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_VARIATION_PASSWORD
+            hint = "Admin PIN"
+            textSize = 20f
+            setPadding(32, 24, 32, 24)
+        }
+
+        val container = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(48, 24, 48, 0)
+
+            addView(TextView(this@PlayerActivity).apply {
+                text = "Enter admin PIN to open playlist settings"
+                textSize = 18f
+            })
+
+            addView(input)
+        }
+
+        AlertDialog.Builder(this)
+            .setTitle("Admin Access")
+            .setView(container)
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setPositiveButton("Unlock", null)
+            .create()
+            .apply {
+                setOnShowListener {
+                    getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                        val enteredPin = input.text.toString().trim()
+                        val securityStorage = SecurityStorage(this@PlayerActivity)
+
+                        if (securityStorage.verifyAdminPin(enteredPin)) {
+                            dismiss()
+                            openPlaylistEditor()
+                        } else {
+                            input.setText("")
+                            Toast.makeText(
+                                this@PlayerActivity,
+                                "Incorrect PIN",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }
+
+                show()
+            }
+    }
+
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -182,14 +242,12 @@ class PlayerActivity : AppCompatActivity() {
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        // Temporary actual-app step:
-        // Next step will replace this with PIN dialog.
-        openPlaylistEditor()
+        showAdminUnlockDialog()
     }
 
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
         if (event.keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_UP) {
-            openPlaylistEditor()
+            showAdminUnlockDialog()
             return true
         }
 

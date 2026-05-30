@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/pinSetupRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="48dp"
+    android:background="#101010">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Set Admin PIN"
+        android:textColor="#FFFFFF"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:paddingBottom="16dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This PIN will be required to edit playlists or exit playback."
+        android:textColor="#CCCCCC"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:paddingBottom="32dp" />
+
+    <EditText
+        android:id="@+id/pinInput"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:hint="Enter PIN"
+        android:inputType="numberPassword"
+        android:maxLength="8"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#777777"
+        android:background="#202020"
+        android:padding="16dp"
+        android:textSize="22sp"
+        android:gravity="center" />
+
+    <EditText
+        android:id="@+id/confirmPinInput"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Confirm PIN"
+        android:inputType="numberPassword"
+        android:maxLength="8"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#777777"
+        android:background="#202020"
+        android:padding="16dp"
+        android:textSize="22sp"
+        android:gravity="center" />
+
+    <Button
+        android:id="@+id/savePinButton"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Save PIN"
+        android:textSize="18sp" />
+
+</LinearLayout>

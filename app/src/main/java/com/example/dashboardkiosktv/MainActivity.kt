@@ -4,18 +4,28 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dashboardkiosktv.data.PlaylistStorage
+import com.example.dashboardkiosktv.data.SecurityStorage
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val storage = PlaylistStorage(this)
+        val securityStorage = SecurityStorage(this)
+        val playlistStorage = PlaylistStorage(this)
 
-        val nextActivity = if (storage.hasValidSavedPlaylist()) {
-            PlayerActivity::class.java
-        } else {
-            PlaylistActivity::class.java
+        val nextActivity = when {
+            !securityStorage.hasAdminPin() -> {
+                PinSetupActivity::class.java
+            }
+
+            playlistStorage.hasValidSavedPlaylist() -> {
+                PlayerActivity::class.java
+            }
+
+            else -> {
+                PlaylistActivity::class.java
+            }
         }
 
         startActivity(Intent(this, nextActivity))
