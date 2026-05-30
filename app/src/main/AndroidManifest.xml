@@ -22,7 +22,7 @@
         android:theme="@style/Theme.DashboardKioskTV">
         <activity
             android:name=".MainActivity"
-            android:exported="false"
+            android:exported="true"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
