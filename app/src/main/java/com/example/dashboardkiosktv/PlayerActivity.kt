@@ -23,6 +23,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.example.dashboardkiosktv.data.SecurityStorage
+import com.example.dashboardkiosktv.kiosk.KioskManager
+import com.example.dashboardkiosktv.security.AdminPinDialog
 
 class PlayerActivity : AppCompatActivity() {
 
@@ -41,76 +43,87 @@ class PlayerActivity : AppCompatActivity() {
         }
     }
 
+//    private fun showAdminUnlockDialog() {
+//        val input = EditText(this).apply {
+//            inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_VARIATION_PASSWORD
+//            hint = "Admin PIN"
+//            textSize = 20f
+//            setPadding(32, 24, 32, 24)
+//            imeOptions = android.view.inputmethod.EditorInfo.IME_ACTION_DONE
+//        }
+//
+//        val container = LinearLayout(this).apply {
+//            orientation = LinearLayout.VERTICAL
+//            setPadding(48, 24, 48, 0)
+//
+//            addView(TextView(this@PlayerActivity).apply {
+//                text = "Enter admin PIN"
+//                textSize = 18f
+//            })
+//
+//            addView(input)
+//        }
+//
+//        val dialog = AlertDialog.Builder(this)
+//            .setTitle("Admin Access")
+//            .setView(container)
+//            .setNegativeButton("Cancel") { d, _ ->
+//                d.dismiss()
+//            }
+//            .create()
+//
+//        fun tryUnlock() {
+//            val enteredPin = input.text.toString().trim()
+//            val securityStorage = SecurityStorage(this@PlayerActivity)
+//
+//            if (securityStorage.verifyAdminPin(enteredPin)) {
+//                dialog.dismiss()
+//                openAdminMenu()
+//            } else {
+//                input.setText("")
+//                Toast.makeText(
+//                    this@PlayerActivity,
+//                    "Incorrect PIN",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//            }
+//        }
+//
+//        input.setOnEditorActionListener { _, actionId, event ->
+//            val isDoneAction =
+//                actionId == android.view.inputmethod.EditorInfo.IME_ACTION_DONE
+//
+//            val isEnterKey =
+//                event?.keyCode == KeyEvent.KEYCODE_ENTER &&
+//                        event.action == KeyEvent.ACTION_UP
+//
+//            if (isDoneAction || isEnterKey) {
+//                tryUnlock()
+//                true
+//            } else {
+//                false
+//            }
+//        }
+//
+//        dialog.setOnShowListener {
+//            input.requestFocus()
+//            dialog.window?.setSoftInputMode(
+//                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE
+//            )
+//        }
+//
+//        dialog.show()
+//    }
+
+
     private fun showAdminUnlockDialog() {
-        val input = EditText(this).apply {
-            inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_VARIATION_PASSWORD
-            hint = "Admin PIN"
-            textSize = 20f
-            setPadding(32, 24, 32, 24)
-            imeOptions = android.view.inputmethod.EditorInfo.IME_ACTION_DONE
+        AdminPinDialog.show(
+            context = this,
+            title = "Admin Access",
+            message = "Enter admin PIN to open menu"
+        ) {
+            openAdminMenu()
         }
-
-        val container = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            setPadding(48, 24, 48, 0)
-
-            addView(TextView(this@PlayerActivity).apply {
-                text = "Enter admin PIN"
-                textSize = 18f
-            })
-
-            addView(input)
-        }
-
-        val dialog = AlertDialog.Builder(this)
-            .setTitle("Admin Access")
-            .setView(container)
-            .setNegativeButton("Cancel") { d, _ ->
-                d.dismiss()
-            }
-            .create()
-
-        fun tryUnlock() {
-            val enteredPin = input.text.toString().trim()
-            val securityStorage = SecurityStorage(this@PlayerActivity)
-
-            if (securityStorage.verifyAdminPin(enteredPin)) {
-                dialog.dismiss()
-                openAdminMenu()
-            } else {
-                input.setText("")
-                Toast.makeText(
-                    this@PlayerActivity,
-                    "Incorrect PIN",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
-
-        input.setOnEditorActionListener { _, actionId, event ->
-            val isDoneAction =
-                actionId == android.view.inputmethod.EditorInfo.IME_ACTION_DONE
-
-            val isEnterKey =
-                event?.keyCode == KeyEvent.KEYCODE_ENTER &&
-                        event.action == KeyEvent.ACTION_UP
-
-            if (isDoneAction || isEnterKey) {
-                tryUnlock()
-                true
-            } else {
-                false
-            }
-        }
-
-        dialog.setOnShowListener {
-            input.requestFocus()
-            dialog.window?.setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE
-            )
-        }
-
-        dialog.show()
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -127,6 +140,8 @@ class PlayerActivity : AppCompatActivity() {
         setContentView(R.layout.activity_player)
 
         webView = findViewById(R.id.dashboardWebView)
+        KioskManager.configureLockTaskIfDeviceOwner(this)
+        KioskManager.startLockTaskIfPermitted(this)
 
         configureWebView()
         loadSavedPlaylist()

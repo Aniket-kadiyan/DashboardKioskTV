@@ -41,4 +41,12 @@
         android:text="Start Display"
         android:textSize="20sp" />
 
+    <Button
+        android:id="@+id/exitButton"
+        android:layout_width="420dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="Exit App"
+        android:textSize="20sp" />
+
 </LinearLayout>
