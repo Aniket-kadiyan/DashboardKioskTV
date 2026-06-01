@@ -26,6 +26,14 @@
         android:textSize="20sp" />
 
     <Button
+        android:id="@+id/kioskStatusButton"
+        android:layout_width="420dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="Kiosk Status"
+        android:textSize="20sp" />
+
+    <Button
         android:id="@+id/backButton"
         android:layout_width="420dp"
         android:layout_height="wrap_content"

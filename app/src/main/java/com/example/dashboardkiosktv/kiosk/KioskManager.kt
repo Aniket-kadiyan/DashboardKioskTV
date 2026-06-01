@@ -5,7 +5,12 @@ import android.app.ActivityManager
 import android.app.admin.DevicePolicyManager
 import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.os.BatteryManager
+import android.provider.Settings
 import android.util.Log
+import com.example.dashboardkiosktv.MainActivity
 
 object KioskManager {
 
@@ -77,5 +82,77 @@ object KioskManager {
             context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
 
         return activityManager.lockTaskModeState != ActivityManager.LOCK_TASK_MODE_NONE
+    }
+
+    fun setAsPersistentHomeIfDeviceOwner(context: Context) {
+        val dpm = context.getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
+
+        if (!isDeviceOwner(context)) {
+            Log.w(TAG, "App is not device owner. Cannot set persistent home.")
+            return
+        }
+
+        val filter = IntentFilter(Intent.ACTION_MAIN).apply {
+            addCategory(Intent.CATEGORY_HOME)
+            addCategory(Intent.CATEGORY_DEFAULT)
+        }
+
+        val activity = ComponentName(context, MainActivity::class.java)
+
+        dpm.addPersistentPreferredActivity(
+            adminComponent(context),
+            filter,
+            activity
+        )
+
+        Log.i(TAG, "Persistent home set to MainActivity.")
+    }
+
+    fun enableStayAwakeWhilePluggedInIfDeviceOwner(context: Context) {
+        val dpm = context.getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
+
+        if (!isDeviceOwner(context)) {
+            Log.w(TAG, "App is not device owner. Cannot set stay-awake policy.")
+            return
+        }
+
+        val pluggedModes =
+            BatteryManager.BATTERY_PLUGGED_AC or
+                    BatteryManager.BATTERY_PLUGGED_USB or
+                    BatteryManager.BATTERY_PLUGGED_WIRELESS
+
+        dpm.setGlobalSetting(
+            adminComponent(context),
+            Settings.Global.STAY_ON_WHILE_PLUGGED_IN,
+            pluggedModes.toString()
+        )
+
+        Log.i(TAG, "Stay awake while plugged in enabled.")
+    }
+
+    fun configureKioskPoliciesIfDeviceOwner(context: Context) {
+        if (!isDeviceOwner(context)) {
+            return
+        }
+
+        configureLockTaskIfDeviceOwner(context)
+        setAsPersistentHomeIfDeviceOwner(context)
+        enableStayAwakeWhilePluggedInIfDeviceOwner(context)
+    }
+
+    fun enterKioskModeIfPossible(activity: Activity) {
+        configureKioskPoliciesIfDeviceOwner(activity)
+        startLockTaskIfPermitted(activity)
+    }
+
+    fun getStayAwakeSetting(context: Context): String {
+        return try {
+            Settings.Global.getString(
+                context.contentResolver,
+                Settings.Global.STAY_ON_WHILE_PLUGGED_IN
+            ) ?: "Not set"
+        } catch (ex: Exception) {
+            "Unavailable"
+        }
     }
 }
